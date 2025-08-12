@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS productos(
 	FOREIGN KEY (categoria) REFERENCES categorias(id_categoria)
 );
 
-CREATE TABLE IF NOT EXISTS detalles_pedidos( -- tabla para detallar cuando piden mas de un producto por pedido.
+CREATE TABLE IF NOT EXISTS detalles_pedidos(
 	idx_pedidos INT,
     idx_productos INT,
     cantidad INT,
