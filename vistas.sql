@@ -14,3 +14,24 @@ SELECT id_producto, nombre_producto, stock,
     ELSE "Agotado"
     END AS estado
 FROM productos;
+
+CREATE VIEW vista_ventas_productos AS
+SELECT p.nombre_producto, SUM(d.cantidad) AS total_vendido, SUM(d.cantidad * p.precio) AS ingreso_total
+FROM productos p
+INNER JOIN detalles_pedidos d ON p.id_producto = d.idx_productos
+GROUP BY p.nombre_producto;
+
+CREATE VIEW vista_ingresos_diarios AS
+SELECT DATE(pe.fecha) AS fecha, SUM(d.cantidad * p.precio) AS total_diario
+FROM pedidos pe
+JOIN detalles_pedidos d ON pe.id_pedido = d.idx_pedidos
+JOIN productos p ON d.idx_productos = p.id_producto
+GROUP BY DATE(pe.fecha);
+
+CREATE VIEW vista_ingresos_mensuales AS
+SELECT YEAR(pe.fecha) AS anio, MONTH(pe.fecha) AS mes, SUM(d.cantidad * p.precio) AS total_mensual
+FROM pedidos pe
+JOIN detalles_pedidos d ON pe.id_pedido = d.idx_pedidos
+JOIN productos p ON d.idx_productos = p.id_producto
+GROUP BY YEAR(pe.fecha), MONTH(pe.fecha);
+
