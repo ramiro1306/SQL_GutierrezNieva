@@ -29,4 +29,3 @@ BEGIN
 END$$
 
 DELIMITER ;
- DROP procedure agregar_producto;
